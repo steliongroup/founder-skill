@@ -7,7 +7,7 @@ come from the frozen rubric, and the next experiment is picked by rule.
 
 import math
 
-from . import evidence, prereg, scoring
+from . import candidates, evidence, fetch, prereg, scoring
 from .common import IdeaError, Idea, data_file, now_iso, read_json, read_jsonl, write_json, write_text
 
 LABELS_IT = {"KILL": "SCARTARE", "PIVOT": "CAMBIARE IMPOSTAZIONE", "TEST": "TESTARE CON PERSONE REALI",
@@ -27,6 +27,10 @@ def compute(d):
     names = {c["key"]: c["name_it"] for c in rubric["criteria"]}
     sheet = read_json(idea.idea)
     facts = read_jsonl(idea.evidence)
+    cands = candidates.summary(idea)
+    if cands["pending"]:
+        raise IdeaError("%d collected candidates are still undecided: promote or reject each one "
+                        "(ik.py candidates list %s --pending)" % (cands["pending"], d))
     missing = []
     try:
         judged = scoring.validate(d)
@@ -109,10 +113,25 @@ def compute(d):
                       "adjustments": econ["adjustments"], "tornado": econ["tornado"][:3],
                       "strong_key_input_share": econ["strong_key_input_share"]},
         "next_experiment": exp, "weakest_criterion": target,
+        "candidates": cands, "sources": _sources(idea),
     }
     write_json(idea.verdict, _clean(result))
     write_text(idea.p("verdict.md"), report(result, names))
     return result
+
+
+def _sources(idea):
+    """What the collectors reached, failed to reach, or skipped (latest status per source and query)."""
+    last = {}
+    for e in fetch.log_entries(idea):
+        last[(e["source"], e.get("query"))] = e
+    out = {"ok": 0, "error": [], "skipped": []}
+    for (src, q), e in sorted(last.items(), key=lambda kv: (kv[0][0], str(kv[0][1]))):
+        if e["status"] == "ok":
+            out["ok"] += 1
+        else:
+            out[e["status"]].append({"source": src, "query": q, "error": e.get("error")})
+    return out
 
 
 def _clean(o):
@@ -185,6 +204,16 @@ def report(r, names):
     tri = [k for k, t in r["triangulation"].items() if t["triangulated"]]
     if tri:
         L.append("Confermati da almeno 2 fonti indipendenti: %s." % ", ".join(tri))
+    c = r.get("candidates") or {}
+    if c.get("promoted") or c.get("rejected"):
+        L.append("Dati raccolti automaticamente: %d promossi a prova, %d scartati come non pertinenti "
+                 "(motivi in data/candidates.jsonl)." % (c["promoted"], c["rejected"]))
+    src = r.get("sources") or {}
+    if src.get("error") or src.get("skipped"):
+        L += ["", "## Fonti non raggiunte o saltate", "",
+              "Queste fonti non hanno contribuito: i criteri che ne dipendono hanno meno prove, non prove inventate.", ""]
+        for e in src.get("error", []) + src.get("skipped", []):
+            L.append("- %s (%s): %s" % (e["source"], e["query"], e["error"]))
     x = r["next_experiment"]
     L += ["", "## Prossimo passo: l'esperimento reale più economico", "",
           "Criterio più debole tra quelli importanti: **%s**." % names[r["weakest_criterion"]], "",

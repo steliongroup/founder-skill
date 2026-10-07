@@ -39,7 +39,7 @@ Only facts marked verified count as A or B.
 
 {facts}
 
-## Rubric
+{computed}## Rubric
 
 {rubric}
 
@@ -80,7 +80,7 @@ def _facts_text(facts):
         val = "" if f.get("value") is None else "%s %s" % (f["value"], f.get("unit", ""))
         L.append("| %s | %s | %s | %s | %s | %s | %s |" % (
             f["id"], f["claim"].replace("|", "/"), val.strip(), f["publisher"].replace("|", "/"),
-            f.get("date", ""), evidence.effective_grade(f), "yes" if f.get("verified") else "no"))
+            f.get("date") or "", evidence.effective_grade(f), "yes" if f.get("verified") else "no"))
     return "\n".join(L)
 
 
@@ -105,8 +105,14 @@ def brief(d):
     reg = prereg.load(d)
     sheet = read_json(idea.idea)
     facts = read_jsonl(idea.evidence)
+    computed = ""
+    mr = read_json(idea.p("market-result.json"), default={})
+    if mr:
+        from .market import summary_lines
+        computed = ("## Computed indicators\n\nCalculated by code from the evidence and estimates above; the grade of "
+                    "each input is shown. Use them for the market criterion.\n\n" + "\n".join(summary_lines(mr)) + "\n\n")
     text = BRIEF.format(codename=sheet["codename"], sheet=_sheet_text(sheet), facts=_facts_text(facts),
-                        rubric=_rubric_text(reg["rubric"]), out=idea.scores)
+                        computed=computed, rubric=_rubric_text(reg["rubric"]), out=idea.scores)
     write_text(idea.brief, text)
     return idea.brief
 

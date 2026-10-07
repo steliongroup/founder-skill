@@ -1,0 +1,89 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Enterprises by size class and NACE",
+ "id": [
+  "freq",
+  "indic_sbs",
+  "nace_r2",
+  "size_emp",
+  "geo",
+  "time"
+ ],
+ "size": [
+  1,
+  1,
+  1,
+  1,
+  2,
+  1
+ ],
+ "dimension": {
+  "freq": {
+   "category": {
+    "index": {
+     "A": 0
+    },
+    "label": {
+     "A": "Annual"
+    }
+   }
+  },
+  "indic_sbs": {
+   "category": {
+    "index": {
+     "ENT_NR": 0
+    },
+    "label": {
+     "ENT_NR": "Enterprises - number"
+    }
+   }
+  },
+  "nace_r2": {
+   "category": {
+    "index": {
+     "M": 0
+    },
+    "label": {
+     "M": "Professional, scientific and technical activities"
+    }
+   }
+  },
+  "size_emp": {
+   "category": {
+    "index": {
+     "0-9": 0
+    },
+    "label": {
+     "0-9": "From 0 to 9 persons employed"
+    }
+   }
+  },
+  "geo": {
+   "category": {
+    "index": {
+     "DE": 0,
+     "IT": 1
+    },
+    "label": {
+     "DE": "Germany",
+     "IT": "Italy"
+    }
+   }
+  },
+  "time": {
+   "category": {
+    "index": {
+     "2023": 0
+    },
+    "label": {
+     "2023": "2023"
+    }
+   }
+  }
+ },
+ "value": {
+  "0": 512000,
+  "1": 701000
+ }
+}

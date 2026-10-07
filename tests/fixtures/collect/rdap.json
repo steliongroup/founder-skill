@@ -1,0 +1,12 @@
+{
+ "events": [
+  {
+   "eventAction": "registration",
+   "eventDate": "2015-06-01T00:00:00Z"
+  },
+  {
+   "eventAction": "expiration",
+   "eventDate": "2027-06-01T00:00:00Z"
+  }
+ ]
+}

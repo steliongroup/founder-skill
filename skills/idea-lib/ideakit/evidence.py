@@ -18,8 +18,10 @@ GRADE_BY_TYPE = {
     "primary_data": "A",     # the user's own experiment results, raw datasets
     "company_page": "A",     # a company's own page, for facts about that company (price, features)
     "app_store": "A",        # store listing data: ratings, review counts, install buckets
+    "measured_data": "A",    # exact counts from a platform's own API: pageviews, stars, posts, registration dates
     "academic": "B",         # peer-reviewed or working paper with method and sample
     "industry_report": "B",  # benchmark report with a known sample
+    "measured_index": "B",   # sampled or relative indices: Google Trends, Tranco rank
     "review_platform": "B",  # individual public reviews, as evidence of what buyers say
     "news": "C",
     "forum": "C",            # Reddit, HN, community posts
@@ -153,11 +155,39 @@ def verify_fact(fact, html_dir=None, fetch=fetch_url, today=None):
     return fact
 
 
+def add_collected(idea, cand, criteria=None):
+    """A fact whose value code read from an API response. Verified by construction;
+    re-verification checks that the stored raw response was not altered."""
+    facts = load(idea)
+    if cand["source_type"] not in GRADE_BY_TYPE:
+        raise IdeaError("unknown source_type %r" % cand["source_type"])
+    fact = {k: cand[k] for k in ("claim", "value", "unit", "url", "quote", "publisher", "source_type", "date",
+                                 "claim_key", "raw_file", "raw_sha256", "query", "sample_size") if k in cand}
+    fact.update(id=_next_id(facts), grade=GRADE_BY_TYPE[cand["source_type"]],
+                default_grade=GRADE_BY_TYPE[cand["source_type"]], collected=True, candidate_id=cand["id"],
+                criteria=criteria or cand.get("criteria") or [], verified=True, verify_status="collected",
+                added_at=now_iso(), verified_at=now_iso())
+    facts.append(fact)
+    write_jsonl(idea.evidence, facts)
+    return fact["id"]
+
+
+def _verify_collected(idea, f):
+    from .fetch import raw_sha_ok
+    ok = raw_sha_ok(idea, f.get("raw_file", ""), f.get("raw_sha256", ""))
+    f.update(verified=ok, verify_status="collected" if ok else "raw_changed_or_missing", verified_at=now_iso())
+    return f
+
+
 def verify(idea, ids=None, html_dir=None, recheck=False, fetch=fetch_url):
     facts = load(idea)
     done = []
     for f in facts:
         if ids and f["id"] not in ids:
+            continue
+        if f.get("collected"):
+            _verify_collected(idea, f)
+            done.append((f["id"], f["verify_status"]))
             continue
         if f.get("verified") and not recheck and not ids:
             continue
@@ -198,5 +228,5 @@ def summary(facts):
     for f in facts:
         grades[effective_grade(f)] += 1
     pending = sum(1 for f in facts if f.get("verify_status") == "pending")
-    failed = sum(1 for f in facts if f.get("verify_status") not in ("ok", "pending"))
+    failed = sum(1 for f in facts if f.get("verify_status") not in ("ok", "pending", "collected"))
     return {"total": len(facts), "by_effective_grade": grades, "pending": pending, "failed": failed}

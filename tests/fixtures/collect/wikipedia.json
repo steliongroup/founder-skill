@@ -1,0 +1,220 @@
+{
+ "items": [
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024010100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1000
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024020100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1010
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024030100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1020
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024040100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1030
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024050100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1040
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024060100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1050
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024070100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1060
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024080100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1070
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024090100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1080
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024100100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1090
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024110100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1100
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024120100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1110
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024010100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1120
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024020100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1130
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024030100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1140
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024040100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1150
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024050100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1160
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024060100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1170
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024070100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1180
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024080100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1190
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024090100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1200
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024100100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1210
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024110100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1220
+  },
+  {
+   "project": "en.wikipedia",
+   "article": "Invoice",
+   "granularity": "monthly",
+   "timestamp": "2024120100",
+   "access": "all-access",
+   "agent": "user",
+   "views": 1230
+  }
+ ]
+}

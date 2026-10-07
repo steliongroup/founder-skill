@@ -7,7 +7,8 @@ from _load import ROOT, SKILLS_DIR
 
 SKILLS = ["founder-board", "founder-marketing", "founder-cfo", "founder-consumer", "founder-launch",
           "founder-pricing", "founder-offer", "founder-competitors", "founder-brand", "founder-ops", "founder-plan"]
-IDEA_SKILLS = ["idea-valuta", "idea-intake", "idea-evidence", "idea-economics", "idea-verdict"]
+IDEA_SKILLS = ["idea-valuta", "idea-intake", "idea-collect", "idea-evidence", "idea-market", "idea-economics",
+               "idea-verdict"]
 ABOUT = ("Eleven free Claude skills that test a business before you launch it: a board trained on Hormozi, "
          "Thiel and Jobs, a marketing director, a CFO, and a consumer panel of 100 buyer agents. Free, MIT.")
 

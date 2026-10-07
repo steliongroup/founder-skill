@@ -1,0 +1,29 @@
+{
+ "resultCount": 2,
+ "results": [
+  {
+   "trackId": 111,
+   "trackName": "Invoice Chaser",
+   "sellerName": "Chaser Ltd",
+   "price": 0.0,
+   "currency": "EUR",
+   "averageUserRating": 4.6,
+   "userRatingCount": 1834,
+   "trackViewUrl": "https://apps.apple.com/it/app/id111",
+   "primaryGenreName": "Business",
+   "releaseDate": "2019-03-01T08:00:00Z"
+  },
+  {
+   "trackId": 222,
+   "trackName": "Paid Late Pro",
+   "sellerName": "PLP",
+   "price": 4.99,
+   "currency": "EUR",
+   "averageUserRating": 3.1,
+   "userRatingCount": 57,
+   "trackViewUrl": "https://apps.apple.com/it/app/id222",
+   "primaryGenreName": "Finance",
+   "releaseDate": "2023-01-01T08:00:00Z"
+  }
+ ]
+}

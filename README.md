@@ -50,7 +50,7 @@ but the method works.
 
 The tools need Python 3.8 or newer. Nothing to pip install.
 
-## Valutatore di idee basato su prove (fase 1)
+## Valutatore di idee basato su prove (fasi 1 e 2)
 
 Un secondo pacchetto, in questa stessa repo, per valutare molte idee di software
 (desktop, mobile, web; B2B e B2C; un paese o globale) con numeri e fatti invece
@@ -60,6 +60,8 @@ che opinioni. Progetto completo e fonti: [`docs/PROPOSTA.md`](docs/PROPOSTA.md).
 | --- | --- |
 | `/idea-valuta` | Orchestratore: esegue tutta la pipeline in modo `--quick` o `--full` e riprende da dove si era fermato |
 | `/idea-intake` | Scheda cieca neutra (`idea.json`) e affermazioni del fondatore come ipotesi di grado D (`claims.jsonl`) |
+| `/idea-collect` | Dati misurati da fonti gratuite (Wikipedia, Google Trends, App Store, Google Play, Hacker News, GitHub, Stack Exchange, RDAP/Tranco, World Bank, Eurostat, YouTube); ogni dato va promosso o scartato con un motivo |
+| `/idea-market` | Mercato raggiungibile dal basso (conteggi ufficiali × quota raggiungibile × adozione × prezzo) e quota necessaria per l'obiettivo |
 | `/idea-evidence` | Fatti con citazione testuale e URL; il codice scarica la pagina e controlla citazione e numero |
 | `/idea-economics` | Economia per software in intervalli, Monte Carlo P10/P50/P90, stime deboli riportate ai tassi base |
 | `/idea-verdict` | Giudice alla cieca, limiti sui voti decisi dal codice, verdetto KILL / PIVOT / TEST / GO con confidenza |
@@ -85,8 +87,11 @@ una repo privata). La libreria `skills/idea-lib/ik.py` usa solo Python standard;
 `python3 skills/idea-lib/ik.py --help` elenca i comandi. Esempio completo e
 fittizio: `skills/idea-lib/examples/sample-idea/`.
 
+Fonti facoltative (gratuite): `pip install trendspy google-play-scraper`, e le
+variabili d'ambiente `YOUTUBE_API_KEY`, `GITHUB_TOKEN`, `STACKEXCHANGE_KEY`.
+Senza di esse quelle fonti vengono saltate e il verdetto lo dice.
+
 Le fasi successive aggiungono:
-- raccolta automatica di dati gratuiti (Trends, store, statistiche ufficiali);
 - panel simulato economico su OpenRouter;
 - giuria multi-modello;
 - classifica tra idee.

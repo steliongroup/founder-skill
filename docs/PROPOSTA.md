@@ -1,6 +1,6 @@
 # Proposta: da "founder-skill" a un valutatore di idee basato su fatti
 
-Data: 2026-10-07. Stato: approvata dall'utente il 2026-10-07 (tutte le decisioni del §10 come proposte). Fase 1 implementata (vedi §9).
+Data: 2026-10-07. Stato: approvata dall'utente il 2026-10-07 (tutte le decisioni del §10 come proposte). Fasi 1 e 2 implementate (vedi §9).
 Base: analisi della repo attuale e tre ricerche (metodo anti-bias, simulazione dei
 consumatori e MiroFish, fonti di dati gratuite). Le fonti sono in fondo.
 
@@ -241,8 +241,13 @@ fermano prima di superarlo.
    - `intake`, `prereg`, `economics`, `verdict`;
    - test;
    - modo `quick` funzionante solo con i tassi base.
-2. **Raccoglitori di dati**: `demand`, `competitors`, `voice`, `market`, con cache
-   e degradazione controllata (se una fonte non risponde, il verdetto lo dice).
+2. **Raccoglitori di dati** (fatta il 2026-10-07: skill `idea-collect` e
+   `idea-market`, moduli `fetch`, `collect`, `candidates`, `voice`, `market`):
+   `demand`, `competitors`, `voice`, `market`, con cache e degradazione
+   controllata (se una fonte non risponde, il verdetto lo dice). I dati raccolti
+   diventano "candidati" che vanno promossi o scartati uno per uno con un motivo.
+   Non provati contro i servizi reali da questa sessione (rete bloccata): i test
+   usano risposte registrate nel formato delle API.
 3. **Lavori su OpenRouter**: `panel` v2 con SSR, `jury` multi-modello, tetto di
    costo, registro delle chiamate.
 4. **Trasversali**: `portfolio` (classifica e Brier), `validate` (kit landing page e

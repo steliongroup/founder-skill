@@ -1,0 +1,19 @@
+{
+ "nbHits": 37,
+ "hits": [
+  {
+   "objectID": "4001",
+   "title": "Show HN: I built an invoice chaser",
+   "points": 180,
+   "num_comments": 92,
+   "created_at": "2025-11-02T10:00:00Z"
+  },
+  {
+   "objectID": "4002",
+   "title": "Ask HN: tools for late payments?",
+   "points": 12,
+   "num_comments": 8,
+   "created_at": "2025-05-02T10:00:00Z"
+  }
+ ]
+}

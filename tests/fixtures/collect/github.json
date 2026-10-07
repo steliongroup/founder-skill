@@ -1,0 +1,12 @@
+{
+ "total_count": 64,
+ "items": [
+  {
+   "full_name": "acme/invoice-ninja",
+   "html_url": "https://github.com/acme/invoice-ninja",
+   "stargazers_count": 8500,
+   "pushed_at": "2026-09-30T00:00:00Z",
+   "description": "Invoicing with reminders"
+  }
+ ]
+}

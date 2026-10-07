@@ -8,6 +8,14 @@
     ik.py evidence verify IDEA [--ids F001,F002] [--html-dir DIR] [--recheck]
     ik.py evidence list IDEA
     ik.py baserates list [--unverified] | show ID | verify [--ids ...] [--html-dir DIR]
+    ik.py collect SOURCE IDEA [options]              free data sources -> candidates / voice (ik.py collect --list)
+    ik.py candidates list IDEA [--pending]           numbers the collectors found
+    ik.py candidates promote IDEA K001,K002 [--criteria problem,demand]
+    ik.py candidates reject IDEA K003 --reason "..." not about this idea (reason is kept)
+    ik.py voice list IDEA [--max-rating 3] [--source S]   verbatim buyer texts
+    ik.py voice themes IDEA [--max-rating 3]         count themes from data/voice-tags.json -> candidates
+    ik.py voice promote IDEA V001,V002 [--criteria problem]
+    ik.py market IDEA                                bottom-up SAM from market.json -> market.md
     ik.py econ IDEA [--runs N] [--seed S]            Monte Carlo economics -> economics.json, economics.md
     ik.py brief IDEA                                 blind brief for the judge -> judge/brief.md
     ik.py verdict IDEA                               computed verdict -> verdict.json, verdict.md
@@ -24,12 +32,69 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from ideakit import baserates, economics, evidence, intake, prereg, scoring, verdict  # noqa: E402
+from ideakit import baserates, candidates, collect, economics, evidence, intake, market, prereg, scoring, verdict, voice  # noqa: E402
 from ideakit.common import Idea, IdeaError, read_json, read_jsonl  # noqa: E402
 
 
 def _ids(s):
     return [x.strip() for x in s.split(",") if x.strip()] if s else None
+
+
+def _collect(idea, a):
+    src = a.source
+
+    def need(*names):
+        for n in names:
+            if not getattr(a, n.replace("-", "_")):
+                raise IdeaError("collect %s needs --%s" % (src, n))
+    if src == "autocomplete":
+        need("q")
+        return collect.autocomplete(idea, a.q, a.lang, a.country)
+    if src == "wikipedia":
+        need("article")
+        return collect.wikipedia(idea, a.article, a.lang, max(a.months, 24))
+    if src == "trends":
+        need("keywords")
+        return collect.trends(idea, _ids(a.keywords), a.geo, a.timeframe)
+    if src == "itunes":
+        need("q")
+        return collect.itunes(idea, a.q, a.country)
+    if src == "appreviews":
+        need("app-id")
+        return collect.appreviews(idea, a.app_id, a.country, a.pages)
+    if src == "gplay":
+        need("q")
+        return collect.gplay(idea, a.q, a.country, a.lang, review_apps=a.review_apps)
+    if src == "hn":
+        need("q")
+        return collect.hn(idea, a.q, a.months)
+    if src == "github":
+        need("q")
+        return collect.github(idea, a.q)
+    if src == "stackexchange":
+        need("q")
+        return collect.stackexchange(idea, a.q, a.site)
+    if src == "domain":
+        need("domain")
+        return collect.domain(idea, a.domain)
+    if src == "worldbank":
+        need("countries", "indicator")
+        return collect.worldbank(idea, _ids(a.countries), a.indicator)
+    if src == "eurostat":
+        need("dataset")
+        filters = {}
+        for f in a.filter:
+            k, _, v = f.partition("=")
+            if not k or not v:
+                raise IdeaError("--filter must look like dim=code1,code2")
+            filters[k.strip()] = _ids(v)
+        if a.countries:
+            filters["geo"] = _ids(a.countries)
+        return collect.eurostat(idea, a.dataset, filters, a.unit)
+    if src == "youtube":
+        need("q")
+        return collect.youtube(idea, a.q, a.months)
+    raise IdeaError("unknown source %s" % src)
 
 
 def status(d):
@@ -39,6 +104,9 @@ def status(d):
         ("idea.json (scheda cieca)", os.path.exists(idea.idea), "write idea.json, then: ik.py lint"),
         ("prereg.json (rubrica congelata)", os.path.exists(idea.prereg), "ik.py prereg IDEA --mode quick"),
         ("evidence.jsonl (fatti)", bool(read_jsonl(idea.evidence)), "research, then: ik.py evidence add / verify"),
+        ("data/ (raccolta automatica, facoltativa)", os.path.isdir(idea.p("data")), "ik.py collect --list"),
+        ("market.json (mercato dal basso, facoltativo in quick)", os.path.exists(idea.p("market-result.json")),
+         "write market.json, then: ik.py market IDEA"),
         ("assumptions.json (input economici)", os.path.exists(idea.assumptions), "write assumptions.json"),
         ("economics.json", os.path.exists(idea.economics), "ik.py econ IDEA"),
         ("judge/scores.json (giudizio cieco)", os.path.exists(idea.scores), "ik.py brief IDEA, then run the judge"),
@@ -46,8 +114,9 @@ def status(d):
     ]
     nxt = None
     for name, done, how in steps:
-        print("%s %s" % ("[x]" if done else "[ ]", name))
-        if not done and nxt is None:
+        optional = "facoltativ" in name
+        print("%s %s" % ("[x]" if done else ("[-]" if optional else "[ ]"), name))
+        if not done and not optional and nxt is None:
             nxt = how
     facts = read_jsonl(idea.evidence)
     if facts:
@@ -55,6 +124,9 @@ def status(d):
         print("facts: %d (A %d, B %d, C %d, D %d), pending %d, failed %d" % (
             s["total"], s["by_effective_grade"]["A"], s["by_effective_grade"]["B"], s["by_effective_grade"]["C"],
             s["by_effective_grade"]["D"], s["pending"], s["failed"]))
+    c = candidates.summary(idea)
+    if sum(c.values()):
+        print("candidates: %d pending, %d promoted, %d rejected" % (c["pending"], c["promoted"], c["rejected"]))
     print("next: %s" % (nxt or "done; read verdict.md"))
 
 
@@ -87,6 +159,43 @@ def main(argv=None):
     p.add_argument("idea")
     p.add_argument("--runs", type=int)
     p.add_argument("--seed", type=int)
+    p = sub.add_parser("collect")
+    p.add_argument("source", nargs="?", choices=sorted(collect.SOURCES))
+    p.add_argument("idea", nargs="?")
+    p.add_argument("--list", action="store_true", help="list the sources")
+    p.add_argument("--q", help="search term / query")
+    p.add_argument("--country", default="us")
+    p.add_argument("--lang", default="en")
+    p.add_argument("--geo", default="", help="trends: ISO country, empty = worldwide")
+    p.add_argument("--keywords", help="trends: up to 5, comma separated")
+    p.add_argument("--timeframe", default="today 5-y")
+    p.add_argument("--article", help="wikipedia: exact article title")
+    p.add_argument("--app-id", help="appreviews: App Store numeric id")
+    p.add_argument("--pages", type=int, default=2)
+    p.add_argument("--review-apps", type=int, default=0, help="gplay: fetch 1-3 star reviews of the first N apps")
+    p.add_argument("--domain")
+    p.add_argument("--countries", help="worldbank/eurostat: ISO codes, comma separated")
+    p.add_argument("--indicator", help="worldbank: code or preset (%s)" % ", ".join(collect.WB_PRESETS))
+    p.add_argument("--dataset", help="eurostat dataset code")
+    p.add_argument("--filter", action="append", default=[], help="eurostat: dim=code1,code2 (repeatable)")
+    p.add_argument("--unit", default="", help="eurostat: unit label for the values")
+    p.add_argument("--site", default="stackoverflow")
+    p.add_argument("--months", type=int, default=24)
+    p = sub.add_parser("candidates")
+    p.add_argument("action", choices=["list", "promote", "reject"])
+    p.add_argument("idea")
+    p.add_argument("ids", nargs="?")
+    p.add_argument("--pending", action="store_true")
+    p.add_argument("--reason")
+    p.add_argument("--criteria")
+    p = sub.add_parser("voice")
+    p.add_argument("action", choices=["list", "themes", "promote"])
+    p.add_argument("idea")
+    p.add_argument("ids", nargs="?")
+    p.add_argument("--max-rating", type=int)
+    p.add_argument("--source")
+    p.add_argument("--criteria")
+    sub.add_parser("market").add_argument("idea")
     sub.add_parser("brief").add_argument("idea")
     sub.add_parser("verdict").add_argument("idea")
     sub.add_parser("status").add_argument("idea")
@@ -149,6 +258,67 @@ def main(argv=None):
                      d["revenue_m24"]["p50"], r["p_breakeven_in_horizon"] * 100))
             if r["adjustments"]:
                 print("%d weak inputs clamped to their base rate (see economics.md)" % len(r["adjustments"]))
+        elif a.cmd == "collect":
+            if a.list or not a.source:
+                for k, v in sorted(collect.SOURCES.items()):
+                    print("%-14s %s" % (k, v))
+                return 0
+            if not a.idea:
+                raise IdeaError("give the idea folder")
+            idea = Idea(a.idea)
+            idea.require_dir()
+            res = _collect(idea, a)
+            if isinstance(res, dict):
+                for k, v in res.items():
+                    print("%s: %s" % (k, ", ".join(v) or "(none)"))
+            elif isinstance(res, int):
+                print("%d new voice items. Next: ik.py voice list %s" % (res, a.idea))
+            else:
+                print("%d new candidates%s. Next: ik.py candidates list %s --pending" % (
+                    len(res), (" (%s)" % ", ".join(res)) if res else "", a.idea))
+        elif a.cmd == "candidates":
+            idea = Idea(a.idea)
+            idea.require_dir()
+            if a.action == "list":
+                for c in candidates.load(idea):
+                    if a.pending and c["status"] != "pending":
+                        continue
+                    print("%s [%s, %s] %s = %s %s  <%s>%s" % (
+                        c["id"], c["status"], evidence.GRADE_BY_TYPE[c["source_type"]], c["claim"], c["value"],
+                        c.get("unit", ""), c["url"], (" -> %s" % c["fact_id"]) if c.get("fact_id") else
+                        ((" (%s)" % c["reason"]) if c.get("reason") else "")))
+            else:
+                ids = _ids(a.ids)
+                if not ids:
+                    raise IdeaError("give candidate ids, e.g. K001,K002")
+                done = candidates.review(idea, promote=ids if a.action == "promote" else None,
+                                         reject=ids if a.action == "reject" else None, reason=a.reason,
+                                         criteria=_ids(a.criteria))
+                for cid, res in done:
+                    print("%s -> %s" % (cid, res))
+        elif a.cmd == "voice":
+            idea = Idea(a.idea)
+            idea.require_dir()
+            if a.action == "list":
+                for v in voice.listing(idea, a.max_rating, a.source):
+                    print("%s [%s%s] %s: %s" % (v["id"], v["source"], "" if v.get("rating") is None else ", %d*" % v["rating"],
+                                               v.get("about") or "", v["text"][:300].replace("\n", " ")))
+            elif a.action == "themes":
+                new, snap = voice.themes(idea, 3 if a.max_rating is None else a.max_rating)
+                for k, n in sorted(snap["counts"].items(), key=lambda kv: -kv[1]):
+                    print("%-24s %d of %d" % (k, n, snap["total"]))
+                print("%d new candidates (grade C: agent-tagged counts)" % len(new))
+            else:
+                ids = _ids(a.ids)
+                if not ids:
+                    raise IdeaError("give voice ids, e.g. V001,V007")
+                for vid, fid in voice.promote(idea, ids, _ids(a.criteria)):
+                    print("%s -> %s" % (vid, fid))
+        elif a.cmd == "market":
+            r = market.run(a.idea)
+            rs = r.get("required_share")
+            print("SAM P50 %.0f %s%s. Wrote market.md" % (r["sam"]["p50"], r["currency"],
+                  (", goal needs %.2f%% of it (P50)" % (rs["p50"] * 100)) if rs and rs["p50"] is not None else ""))
         elif a.cmd == "brief":
             print("wrote %s. Give it to a judge that has not seen the founder's notes." % scoring.brief(a.idea))
         elif a.cmd == "verdict":

@@ -47,14 +47,13 @@ standard library only. Idea folders live in `ideas/` in the current project
 
 ## Modes
 
-| mode | when | evidence target | time |
+| mode | when | data | time |
 | --- | --- | --- | --- |
-| `--quick` (default) | raw idea, first screen | 8-15 facts, about 15 searches | 20-40 min |
-| `--full` | idea that survived quick, or already researched | 30-60 facts across all criteria | 1-2 h |
+| `--quick` (default) | raw idea, first screen | 2-3 collectors that fit the archetype, 8-15 facts, no market model | 20-40 min |
+| `--full` | idea that survived quick, or already researched | all fitting collectors, voice themes, bottom-up market, 30-60 facts | 1-2 h |
 
-In this version the data collectors (search demand, store data, official
-statistics, simulated panel, multi-model jury) are not built yet: `--full` means
-deeper web research with the same protocol. Say this once when running `--full`.
+The simulated buyer panel and the multi-model jury are not built yet: in this
+version the judge is one blind Claude sub-agent. Say this once when running `--full`.
 
 ## The pipeline
 
@@ -70,19 +69,28 @@ Resume from the first unchecked step; never redo a frozen step.
    `input/goal.json` as `{"metric": "revenue", "month": 24, "value": 3000}`.
    Then `$IK prereg ideas/<slug> --mode quick|full`. From here on the rubric,
    weights, thresholds and goal cannot change for this run.
-3. **Evidence** (skill `idea-evidence`): research every criterion, register facts
-   with `$IK evidence add`, then `$IK evidence verify`. Facts that fail
-   verification stay grade D; do not delete them, and do not "fix" a quote to
-   make it pass unless you re-read the page.
-4. **Economics** (skill `idea-economics`): write `assumptions.json` from facts and
+3. **Collected data** (skill `idea-collect`): run the free sources that fit the
+   archetype, then promote or reject every candidate with a reason. In quick
+   mode, 2-3 sources (e.g. `trends` or `wikipedia`, plus `itunes`/`gplay` for
+   apps or `hn`/`github` for software); in full mode, all that fit plus the
+   voice themes.
+4. **Evidence from pages** (skill `idea-evidence`): web research for what the
+   collectors cannot measure (competitor prices, surveys, regulation), facts
+   added with `$IK evidence add` and checked with `$IK evidence verify`. Facts
+   that fail verification stay grade D; do not delete them, and do not "fix" a
+   quote to make it pass unless you re-read the page.
+5. **Market** (skill `idea-market`, full mode): bottom-up `market.json`, then
+   `$IK market`.
+6. **Economics** (skill `idea-economics`): write `assumptions.json` from facts and
    base rates, then `$IK econ`.
-5. **Blind judgment and verdict** (skill `idea-verdict`): `$IK brief`, a judge
+7. **Blind judgment and verdict** (skill `idea-verdict`): `$IK brief`, a judge
    sub-agent writes `judge/scores.json`, then `$IK verdict`.
-6. **Report to the user**, in Italian, short:
+8. **Report to the user**, in Italian, short:
    - the verdict line exactly as `verdict.md` states it (verdict, score, confidence);
    - the two or three criteria that decided it, each with its strongest fact;
    - any kill threshold that fired, word for word;
    - what share of the evidence is verified A/B, and what is still hypothesis;
+   - which data sources failed or were skipped, if any;
    - the next experiment and its pre-set pass threshold;
    - where the files are (`ideas/<slug>/verdict.md`, `economics.md`).
 
@@ -108,6 +116,7 @@ data (a sheet, an analytics export) and the exact figure as quote.
 ## Output
 
 `ideas/<slug>/`: `idea.json`, `claims.jsonl`, `prereg.json`, `evidence.jsonl`,
+`data/` (raw responses, candidates, voice), `market.json`, `market.md`,
 `assumptions.json`, `economics.json`, `economics.md`, `judge/brief.md`,
 `judge/scores.json`, `verdict.json`, `verdict.md`, and `input/` (private notes,
 never shown to the judge).
