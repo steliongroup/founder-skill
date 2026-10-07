@@ -1,0 +1,9 @@
+[
+ {"criterion": "problem", "rationale": "A survey with a known sample shows most freelancers face late payments, and a forum post shows time spent chasing.", "level": 4, "fact_ids": ["F001", "F003"]},
+ {"criterion": "demand", "rationale": "No measured search or traction data in the evidence.", "level": 2, "fact_ids": []},
+ {"criterion": "market", "rationale": "No bottom-up count of the target segments.", "level": 2, "fact_ids": []},
+ {"criterion": "competition", "rationale": "A competitor already sells reminders; no evidence of a gap.", "level": 2, "fact_ids": ["F002"]},
+ {"criterion": "willingness_to_pay", "rationale": "A competitor charges 15 EUR a month for this feature, but no evidence these buyers pay it.", "level": 4, "fact_ids": ["F002"]},
+ {"criterion": "distribution", "rationale": "No channel evidence.", "level": 2, "fact_ids": []},
+ {"criterion": "feasibility", "rationale": "Email reminders are a common, buildable feature; no blocking risk in the evidence.", "level": 3, "fact_ids": []}
+]

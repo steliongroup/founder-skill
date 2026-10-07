@@ -50,6 +50,47 @@ but the method works.
 
 The tools need Python 3.8 or newer. Nothing to pip install.
 
+## Valutatore di idee basato su prove (fase 1)
+
+Un secondo pacchetto, in questa stessa repo, per valutare molte idee di software
+(desktop, mobile, web; B2B e B2C; un paese o globale) con numeri e fatti invece
+che opinioni. Progetto completo e fonti: [`docs/PROPOSTA.md`](docs/PROPOSTA.md).
+
+| comando | cosa fa |
+| --- | --- |
+| `/idea-valuta` | Orchestratore: esegue tutta la pipeline in modo `--quick` o `--full` e riprende da dove si era fermato |
+| `/idea-intake` | Scheda cieca neutra (`idea.json`) e affermazioni del fondatore come ipotesi di grado D (`claims.jsonl`) |
+| `/idea-evidence` | Fatti con citazione testuale e URL; il codice scarica la pagina e controlla citazione e numero |
+| `/idea-economics` | Economia per software in intervalli, Monte Carlo P10/P50/P90, stime deboli riportate ai tassi base |
+| `/idea-verdict` | Giudice alla cieca, limiti sui voti decisi dal codice, verdetto KILL / PIVOT / TEST / GO con confidenza |
+
+Come funziona contro i bias:
+- **Rubrica, pesi, soglie di scarto e obiettivo** sono congelati prima della
+  ricerca, con un hash.
+- **Ogni stima parte da un tasso base pubblicato**
+  (`skills/idea-lib/data/baserates.json`).
+- **Un fatto vale A o B solo se il codice ritrova la citazione sulla pagina.**
+- **Il giudice vede solo la scheda neutra e la tabella delle prove.**
+- **Un livello sopra 3 richiede prove forti.**
+- **Il verdetto è calcolato dal codice.**
+
+Installazione, insieme alla libreria comune:
+
+```bash
+cp -r skills/idea-* ~/.claude/skills/
+```
+
+Le idee vivono in `ideas/<nome>/` nella cartella in cui lanci Claude Code (meglio
+una repo privata). La libreria `skills/idea-lib/ik.py` usa solo Python standard;
+`python3 skills/idea-lib/ik.py --help` elenca i comandi. Esempio completo e
+fittizio: `skills/idea-lib/examples/sample-idea/`.
+
+Le fasi successive aggiungono:
+- raccolta automatica di dati gratuiti (Trends, store, statistiche ufficiali);
+- panel simulato economico su OpenRouter;
+- giuria multi-modello;
+- classifica tra idee.
+
 ## The eleven
 
 | command | job | what it does |

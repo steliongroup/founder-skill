@@ -1,6 +1,6 @@
 # Proposta: da "founder-skill" a un valutatore di idee basato su fatti
 
-Data: 2026-10-07. Stato: proposta da approvare, niente ancora implementato.
+Data: 2026-10-07. Stato: approvata dall'utente il 2026-10-07 (tutte le decisioni del §10 come proposte). Fase 1 implementata (vedi §9).
 Base: analisi della repo attuale e tre ricerche (metodo anti-bias, simulazione dei
 consumatori e MiroFish, fonti di dati gratuite). Le fonti sono in fondo.
 
@@ -231,7 +231,10 @@ fermano prima di superarlo.
 
 ## 9. Piano di implementazione
 
-1. **Fondamenta**:
+1. **Fondamenta** (fatta il 2026-10-07: `skills/idea-lib/` e le skill `idea-valuta`,
+   `idea-intake`, `idea-evidence`, `idea-economics`, `idea-verdict`; in questa
+   fase il giudice è un solo sub-agente Claude e `--full` è una ricerca web più
+   ampia con lo stesso protocollo):
    - schema di `evidence.jsonl` e verificatore delle fonti;
    - `baserates.json` con fonti;
    - rubriche per archetipo;

@@ -1,0 +1,15 @@
+{
+ "schema": 1,
+ "codename": "IDEA-7C2E",
+ "one_liner": "A web app that sends polite automatic payment reminders for unpaid invoices of freelancers.",
+ "problem": "Freelancers wait for late payments and spend time writing reminder emails by hand.",
+ "solution": "Connects to the invoicing tool, tracks due dates and sends a sequence of reminder emails until the invoice is paid.",
+ "target_segments": [
+  {"name": "Freelance designers and developers", "description": "Solo professionals in the EU who send 5 to 30 invoices a month."},
+  {"name": "Small agencies", "description": "Teams of 2 to 10 people without a dedicated finance person."}
+ ],
+ "archetype": {"market": "b2b", "platform": ["web"], "geo": ["IT", "DE", "FR", "ES"], "revenue_model": "subscription"},
+ "price_hypothesis": {"amount": 12, "currency": "EUR", "period": "month"},
+ "current_alternatives": ["manual emails", "reminder features inside invoicing tools", "spreadsheets"],
+ "stage": "raw"
+}

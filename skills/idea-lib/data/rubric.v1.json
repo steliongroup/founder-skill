@@ -1,0 +1,126 @@
+{
+ "id": "idea-rubric",
+ "version": 1,
+ "about": "Frozen before any research (ik.py prereg). Never edit a version that has been used: copy it to rubric.v2.json instead, so old verdicts stay comparable.",
+ "scale": {"min": 1, "max": 5},
+ "criteria": [
+  {
+   "key": "problem",
+   "name_it": "Problema reale e doloroso",
+   "question": "Is there evidence that the target buyers have this problem, that it hurts, and that they already spend time or money on it?",
+   "anchors": {
+    "1": "Evidence shows the target buyers do not have this problem or do not care (e.g. reviews or data contradict it).",
+    "2": "Only the proposer asserts the problem; no independent trace of it.",
+    "3": "Plausible: some independent mentions of the problem, but no sign that people spend money or effort on it.",
+    "4": "Verified independent evidence that many target buyers have the problem AND use a workaround or pay for an alternative.",
+    "5": "As 4, from at least two independent strong sources, with signs of high frequency or high cost of the problem."
+   }
+  },
+  {
+   "key": "demand",
+   "name_it": "Segnali di domanda",
+   "question": "Do measurable signals (search interest, traffic or downloads of alternatives, community activity, paid spend) show that people look for a solution?",
+   "anchors": {
+    "1": "Measured demand signals are flat-to-absent or declining sharply.",
+    "2": "No measured demand signal found.",
+    "3": "Weak or indirect signals (some searches, small communities).",
+    "4": "Clear measured signals: meaningful search volume or interest, or competitors with substantial verified traction.",
+    "5": "Strong, growing, independently confirmed demand signals."
+   }
+  },
+  {
+   "key": "market",
+   "name_it": "Mercato raggiungibile",
+   "question": "Is the reachable market (SAM) large enough for the revenue goal, computed bottom-up from counts and prices?",
+   "anchors": {
+    "1": "The reachable market is smaller than the revenue goal even with full capture.",
+    "2": "Market size unknown or only top-down figures from vendor reports.",
+    "3": "Bottom-up estimate exists but rests on weak inputs; goal needs an implausibly high share.",
+    "4": "Bottom-up SAM from official or primary counts; the goal needs a modest share (under about 5%).",
+    "5": "As 4, and the goal needs a very small share (under about 1%) of a growing market."
+   }
+  },
+  {
+   "key": "competition",
+   "name_it": "Spazio rispetto ai concorrenti",
+   "question": "Given the verified competitor landscape, is there a specific, defensible gap this offer can occupy?",
+   "anchors": {
+    "1": "Strong incumbents already deliver the same offer at the same or lower price and get good reviews.",
+    "2": "Competitors not researched, or the gap claimed is not visible in evidence.",
+    "3": "Competitors exist with recurring complaints, but the proposed gap is easy to copy.",
+    "4": "Verified recurring complaints or missing segments that the offer addresses directly; copying would take real effort.",
+    "5": "As 4, with a structural advantage (distribution, data, regulation, cost) evidenced by facts."
+   }
+  },
+  {
+   "key": "willingness_to_pay",
+   "name_it": "Disponibilità a pagare",
+   "question": "Is there evidence that the target buyers pay this price for this kind of solution?",
+   "anchors": {
+    "1": "Evidence shows buyers expect it free or pay far less for close alternatives.",
+    "2": "No price evidence beyond the proposer's hypothesis.",
+    "3": "Competitor prices in the same range exist, but no evidence these buyers pay them.",
+    "4": "Verified competitor prices and paying customers at a similar price for a similar job.",
+    "5": "Behavioral evidence for this offer itself (pre-sales, paid pilots, fake-door conversions above the base rate)."
+   }
+  },
+  {
+   "key": "unit_economics",
+   "name_it": "Economia unitaria",
+   "question": "Computed by code from the economics simulation; not judged.",
+   "computed": true,
+   "anchors": {
+    "1": "Each paying customer loses money, or LTV:CAC P50 below 1.",
+    "2": "LTV:CAC P50 between 1 and 2, or break-even beyond the horizon.",
+    "3": "LTV:CAC P50 between 2 and 3 with break-even inside the horizon.",
+    "4": "LTV:CAC P50 at least 3 and break-even P50 within 24 months.",
+    "5": "LTV:CAC P50 at least 5, break-even P50 within 12 months, and the goal reached in at least half the runs (if a goal is set)."
+   }
+  },
+  {
+   "key": "distribution",
+   "name_it": "Canali di acquisizione",
+   "question": "Is there a concrete, evidenced channel to reach the first buyers at an acceptable cost?",
+   "anchors": {
+    "1": "The buyers are reachable only through channels whose cost exceeds what a customer is worth.",
+    "2": "No concrete channel identified.",
+    "3": "Channels named with plausible reasoning but no cost or reach evidence.",
+    "4": "Evidence of where the buyers gather (communities, search, marketplaces) and of the channel's cost or reach.",
+    "5": "As 4, plus an owned or unfair channel (existing audience, partnership, marketplace position) evidenced by facts."
+   }
+  },
+  {
+   "key": "feasibility",
+   "name_it": "Fattibilità ed esposizione a rischi",
+   "question": "Can it be built and operated with stated resources, without blocking regulatory, platform or technical risk?",
+   "anchors": {
+    "1": "A blocking legal, platform or technical barrier is evidenced.",
+    "2": "Major unknowns in regulation, platform policy or technology, not researched.",
+    "3": "Buildable in principle; significant risks identified but unmitigated.",
+    "4": "Buildable with existing components; main risks identified with credible mitigations.",
+    "5": "Low-risk build with proven components and no material regulatory or platform dependency."
+   }
+  }
+ ],
+ "weights_by_market": {
+  "b2c":   {"problem": 15, "demand": 15, "market": 10, "competition": 10, "willingness_to_pay": 15, "unit_economics": 15, "distribution": 10, "feasibility": 10},
+  "b2b":   {"problem": 20, "demand": 10, "market": 10, "competition": 10, "willingness_to_pay": 15, "unit_economics": 15, "distribution": 10, "feasibility": 10},
+  "b2b2c": {"problem": 20, "demand": 10, "market": 10, "competition": 10, "willingness_to_pay": 15, "unit_economics": 15, "distribution": 10, "feasibility": 10}
+ },
+ "evidence_rules": {
+  "strong_grades": ["A", "B"],
+  "cap_without_strong_evidence": 3,
+  "min_independent_strong_for_5": 2,
+  "economics_min_strong_input_share_for_4": 0.5,
+  "economics_key_inputs": ["price", "signup_to_paid", "monthly_churn", "cac_paid"]
+ },
+ "kill": [
+  {"id": "negative_contribution", "action": "kill", "text_it": "Ogni cliente pagante fa perdere soldi (contributo mediano <= 0)."},
+  {"id": "ltv_cac_below_1", "action": "kill", "min": 1.0, "text_it": "LTV:CAC mediano sotto 1: acquisire un cliente costa più di quanto rende."},
+  {"id": "no_breakeven_in_horizon", "action": "flag", "text_it": "Il pareggio mensile mediano non arriva entro l'orizzonte."},
+  {"id": "evidence_against", "action": "kill", "criteria": ["problem", "demand"], "level": 1, "text_it": "Prove forti (A/B) indicano che il problema o la domanda non esistono."}
+ ],
+ "verdict_bands": {"go": 70, "test": 55, "pivot": 40},
+ "confidence_bands": {"high": 0.6, "medium": 0.3},
+ "economics": {"horizon_months": 36, "runs": 4000, "clamp_weak_inputs_to_prior": true}
+}

@@ -1,0 +1,436 @@
+{
+ "schema": 1,
+ "about": "Reference-class priors. Every estimate starts here and moves only with cited evidence. 'value' is the published figure; 'range' is the low/mode/high the simulation uses around it (range_note says how it was set). verified=false means code has not yet found 'match_text' on the source page: run 'ik.py baserates verify' on a machine with internet. Unverified priors count as grade C.",
+ "rates": [
+  {
+   "id": "landing_signup_saas",
+   "metric": "Landing page visitor to conversion (signup, waitlist, lead), SaaS pages",
+   "segment": "SaaS, cold and mixed traffic",
+   "unit": "fraction",
+   "value": 0.038,
+   "range": {
+    "low": 0.015,
+    "mode": 0.038,
+    "high": 0.08
+   },
+   "range_note": "mode = published median; low/high chosen around it for the simulation, not published",
+   "source": "Unbounce Conversion Benchmark Report",
+   "url": "https://unbounce.com/conversion-benchmark-report-2020/",
+   "year": 2020,
+   "sample": "about 41,000 landing pages, all industries",
+   "declared_grade": "B",
+   "match_text": "3.8%",
+   "keywords": [
+    "saas",
+    "conversion"
+   ],
+   "verified": false
+  },
+  {
+   "id": "landing_signup_all",
+   "metric": "Landing page visitor to conversion, all industries",
+   "segment": "all industries",
+   "unit": "fraction",
+   "value": 0.066,
+   "range": {
+    "low": 0.02,
+    "mode": 0.066,
+    "high": 0.12
+   },
+   "range_note": "mode = published median; low/high chosen for the simulation",
+   "source": "Unbounce Conversion Benchmark Report",
+   "url": "https://unbounce.com/conversion-benchmark-report-2020/",
+   "year": 2020,
+   "sample": "about 41,000 landing pages",
+   "declared_grade": "B",
+   "match_text": "6.6%",
+   "keywords": [
+    "median",
+    "conversion"
+   ],
+   "verified": false
+  },
+  {
+   "id": "freemium_to_paid_selfserve",
+   "metric": "Free (freemium) user to paid, self-serve",
+   "segment": "B2B and prosumer software, self-serve freemium",
+   "unit": "fraction",
+   "value": 0.04,
+   "range": {
+    "low": 0.01,
+    "mode": 0.03,
+    "high": 0.06
+   },
+   "range_note": "source calls 3-5% good and 6-8% great; a typical product sits below 'good', so mode set at 3%",
+   "source": "Lenny Rachitsky, What is a good free-to-paid conversion rate (survey with OpenView/Pendo)",
+   "url": "https://www.lennysnewsletter.com/p/what-is-a-good-free-to-paid-conversion",
+   "year": 2022,
+   "sample": "survey of 1,000+ products",
+   "declared_grade": "B",
+   "match_text": "3-5%",
+   "keywords": [
+    "freemium",
+    "self-serve"
+   ],
+   "verified": false
+  },
+  {
+   "id": "trial_to_paid_no_card",
+   "metric": "Free trial to paid, no credit card required (opt-in)",
+   "segment": "SaaS, product-led",
+   "unit": "fraction",
+   "value": 0.18,
+   "range": {
+    "low": 0.08,
+    "mode": 0.18,
+    "high": 0.25
+   },
+   "range_note": "mode = reported figure; range chosen for the simulation",
+   "source": "Lenny Rachitsky survey; consistent with ChartMogul SaaS Conversion Report",
+   "url": "https://www.lennysnewsletter.com/p/what-is-a-good-free-to-paid-conversion",
+   "year": 2022,
+   "sample": "survey of 1,000+ products",
+   "declared_grade": "B",
+   "match_text": "18%",
+   "keywords": [
+    "trial"
+   ],
+   "verified": false
+  },
+  {
+   "id": "trial_to_paid_card",
+   "metric": "Free trial to paid, credit card required up front (opt-out)",
+   "segment": "SaaS",
+   "unit": "fraction",
+   "value": 0.49,
+   "range": {
+    "low": 0.3,
+    "mode": 0.49,
+    "high": 0.6
+   },
+   "range_note": "mode = reported figure; single secondary source, verify before relying on it",
+   "source": "PLG benchmark summaries citing ChartMogul",
+   "url": "https://chartmogul.com/reports/saas-conversion-report/",
+   "year": 2024,
+   "sample": "not stated in the summary",
+   "declared_grade": "C",
+   "match_text": "49%",
+   "keywords": [
+    "trial"
+   ],
+   "verified": false
+  },
+  {
+   "id": "mobile_install_to_paid",
+   "metric": "Mobile subscription app: install to paid within 35 days",
+   "segment": "mobile subscription apps, all categories",
+   "unit": "fraction",
+   "value": 0.019,
+   "range": {
+    "low": 0.005,
+    "mode": 0.019,
+    "high": 0.085
+   },
+   "range_note": "mode = median; high = published P90",
+   "source": "RevenueCat, State of Subscription Apps 2025",
+   "url": "https://www.revenuecat.com/state-of-subscription-apps-2025/",
+   "year": 2025,
+   "sample": "about 115,000 apps",
+   "declared_grade": "B",
+   "match_text": "1.9%",
+   "keywords": [
+    "install",
+    "paid"
+   ],
+   "verified": false
+  },
+  {
+   "id": "mobile_install_to_trial",
+   "metric": "Mobile subscription app: install to trial start",
+   "segment": "mobile subscription apps",
+   "unit": "fraction",
+   "value": 0.062,
+   "range": {
+    "low": 0.02,
+    "mode": 0.062,
+    "high": 0.12
+   },
+   "range_note": "mode = median; range chosen for the simulation",
+   "source": "RevenueCat, State of Subscription Apps 2025",
+   "url": "https://www.revenuecat.com/state-of-subscription-apps-2025/",
+   "year": 2025,
+   "sample": "about 115,000 apps",
+   "declared_grade": "B",
+   "match_text": "6.2%",
+   "keywords": [
+    "trial"
+   ],
+   "verified": false
+  },
+  {
+   "id": "mobile_hard_paywall_vs_freemium",
+   "metric": "Mobile apps: install to paid, hard paywall vs freemium (hard paywall figure)",
+   "segment": "mobile subscription apps",
+   "unit": "fraction",
+   "value": 0.107,
+   "range": {
+    "low": 0.04,
+    "mode": 0.107,
+    "high": 0.15
+   },
+   "range_note": "freemium comparison figure in the same report is 2.1%",
+   "source": "RevenueCat, State of Subscription Apps 2025",
+   "url": "https://www.revenuecat.com/state-of-subscription-apps-2025/",
+   "year": 2025,
+   "sample": "about 115,000 apps",
+   "declared_grade": "B",
+   "match_text": "10.7%",
+   "keywords": [
+    "paywall"
+   ],
+   "verified": false
+  },
+  {
+   "id": "mobile_d30_retention",
+   "metric": "Mobile apps: day-30 user retention (iOS figure)",
+   "segment": "mobile apps, all categories",
+   "unit": "fraction",
+   "value": 0.053,
+   "range": {
+    "low": 0.02,
+    "mode": 0.05,
+    "high": 0.1
+   },
+   "range_note": "iOS 5.3%, Android 3.8% in the source; mode set between them",
+   "source": "AppsFlyer, App Retention Benchmarks",
+   "url": "https://www.appsflyer.com/resources/reports/app-retention-benchmarks/",
+   "year": 2025,
+   "sample": "AppsFlyer customer apps (size not in summary)",
+   "declared_grade": "B",
+   "match_text": "5.3%",
+   "keywords": [
+    "retention",
+    "day 30"
+   ],
+   "verified": false
+  },
+  {
+   "id": "saas_monthly_churn_early",
+   "metric": "SaaS monthly customer churn, early stage (under $300k ARR), median",
+   "segment": "early-stage SaaS",
+   "unit": "fraction",
+   "value": 0.065,
+   "range": {
+    "low": 0.03,
+    "mode": 0.065,
+    "high": 0.12
+   },
+   "range_note": "mode = reported median; range chosen for the simulation",
+   "source": "ChartMogul, SaaS Retention Report 2023",
+   "url": "https://www.chartmogul.com/reports/saas-retention-report/2023/saas-retention-report-2023.pdf",
+   "year": 2023,
+   "sample": "about 2,500 SaaS companies",
+   "declared_grade": "B",
+   "match_text": "6.5%",
+   "keywords": [
+    "churn"
+   ],
+   "verified": false
+  },
+  {
+   "id": "consumer_sub_retention_6m",
+   "metric": "Consumer subscription: share of users retained at 6 months ('good' level)",
+   "segment": "consumer subscription",
+   "unit": "fraction",
+   "value": 0.4,
+   "range": {
+    "low": 0.2,
+    "mode": 0.4,
+    "high": 0.7
+   },
+   "range_note": "source: good about 40%, great about 70%; low chosen for the simulation",
+   "source": "Lenny Rachitsky, What is good retention",
+   "url": "https://www.lennysnewsletter.com/p/what-is-good-retention-issue-29",
+   "year": 2021,
+   "sample": "survey of operators and investors",
+   "declared_grade": "C",
+   "match_text": "40%",
+   "keywords": [
+    "retention",
+    "consumer"
+   ],
+   "verified": false
+  },
+  {
+   "id": "consumer_sub_monthly_churn",
+   "metric": "Consumer subscription: monthly churn derived from 6-month retention",
+   "segment": "consumer subscription",
+   "unit": "fraction",
+   "value": 0.142,
+   "range": {
+    "low": 0.058,
+    "mode": 0.142,
+    "high": 0.235
+   },
+   "range_note": "derived, not published: churn = 1 - r^(1/6) with r = 0.7 (great), 0.4 (good), 0.2 (weak) from consumer_sub_retention_6m",
+   "source": "Lenny Rachitsky, What is good retention (derived)",
+   "url": "https://www.lennysnewsletter.com/p/what-is-good-retention-issue-29",
+   "year": 2021,
+   "sample": "survey of operators and investors",
+   "declared_grade": "C",
+   "match_text": "40%",
+   "keywords": [
+    "retention",
+    "consumer"
+   ],
+   "verified": false
+  },
+  {
+   "id": "b2b_smb_retention_6m",
+   "metric": "B2B SMB and mid-market: share of users retained at 6 months ('good' level)",
+   "segment": "B2B SMB / mid-market",
+   "unit": "fraction",
+   "value": 0.6,
+   "range": {
+    "low": 0.4,
+    "mode": 0.6,
+    "high": 0.8
+   },
+   "range_note": "source: good about 60%, great about 80%",
+   "source": "Lenny Rachitsky, What is good retention",
+   "url": "https://www.lennysnewsletter.com/p/what-is-good-retention-issue-29",
+   "year": 2021,
+   "sample": "survey of operators and investors",
+   "declared_grade": "C",
+   "match_text": "60%",
+   "keywords": [
+    "retention",
+    "smb"
+   ],
+   "verified": false
+  },
+  {
+   "id": "cac_payback_months",
+   "metric": "CAC payback period in months, median",
+   "segment": "B2B SaaS with sales and marketing spend",
+   "unit": "months",
+   "value": 16,
+   "range": {
+    "low": 6,
+    "mode": 16,
+    "high": 24
+   },
+   "range_note": "low = top quartile, high = bottom quartile, as published",
+   "source": "Aleph x Benchmarkit, CAC payback benchmarks (FY2025 data)",
+   "url": "https://www.getaleph.com/answers/cac-payback-period-saas-2026",
+   "year": 2026,
+   "sample": "342 companies",
+   "declared_grade": "B",
+   "match_text": "16 months",
+   "keywords": [
+    "payback"
+   ],
+   "verified": false
+  },
+  {
+   "id": "ltv_cac_rule",
+   "metric": "LTV to CAC ratio considered healthy",
+   "segment": "venture-backed SaaS convention",
+   "unit": "ratio",
+   "value": 3,
+   "range": {
+    "low": 1,
+    "mode": 3,
+    "high": 5
+   },
+   "range_note": "an investor rule of thumb, not an empirical median",
+   "source": "industry convention (many secondary sources)",
+   "url": "https://www.lennysnewsletter.com/p/what-is-good-retention-issue-29",
+   "year": 2021,
+   "sample": "none",
+   "declared_grade": "C",
+   "match_text": "3",
+   "keywords": [],
+   "verified": false
+  },
+  {
+   "id": "us_info_sector_survival_10y",
+   "metric": "US information-sector establishments still operating after 10 years",
+   "segment": "US, information sector, born 2013",
+   "unit": "fraction",
+   "value": 0.291,
+   "range": {
+    "low": 0.291,
+    "mode": 0.291,
+    "high": 0.291
+   },
+   "range_note": "point value; year-1 survival in the same sector 74.9%",
+   "source": "US Bureau of Labor Statistics, Business Employment Dynamics",
+   "url": "https://www.bls.gov/opub/ted/2024/34-7-percent-of-business-establishments-born-in-2013-were-still-operating-in-2023.htm",
+   "year": 2024,
+   "sample": "all US establishments born in 2013",
+   "declared_grade": "A",
+   "match_text": "29.1",
+   "keywords": [
+    "information"
+   ],
+   "verified": false
+  }
+ ],
+ "failure_causes": {
+  "about": "CB Insights post-mortem analyses; shares are of failed startups citing each reason (more than one reason per startup). Use as premortem categories.",
+  "source": "CB Insights, The top reasons startups fail (2014-2021 updates), summary PDF",
+  "url": "https://www.talentica.com/wp-content/uploads/2024/02/The-20-Reasons-Startups-Fail.pdf",
+  "declared_grade": "C",
+  "causes": [
+   {
+    "key": "no_market_need",
+    "share": "35-42%"
+   },
+   {
+    "key": "ran_out_of_cash",
+    "share": "29-38%"
+   },
+   {
+    "key": "team",
+    "share": "20-23%"
+   },
+   {
+    "key": "outcompeted",
+    "share": "about 20%"
+   },
+   {
+    "key": "pricing_cost",
+    "share": "15-18%"
+   },
+   {
+    "key": "poor_product",
+    "share": "about 17%"
+   },
+   {
+    "key": "no_business_model",
+    "share": "about 17%"
+   },
+   {
+    "key": "poor_marketing",
+    "share": "about 14%"
+   },
+   {
+    "key": "ignored_customers",
+    "share": "about 14%"
+   },
+   {
+    "key": "bad_timing",
+    "share": "about 13%"
+   },
+   {
+    "key": "regulatory_legal",
+    "share": "about 8%"
+   },
+   {
+    "key": "platform_dependency",
+    "share": "not in source; added for software built on third-party platforms"
+   }
+  ]
+ }
+}

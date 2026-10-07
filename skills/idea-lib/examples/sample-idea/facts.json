@@ -1,0 +1,12 @@
+[
+ {"claim": "Share of freelancers reporting at least one late payment in the last year", "value": 0.62, "unit": "fraction",
+  "url": "https://example.org/late-payments-survey", "quote": "62% of respondents had at least one invoice paid late in the last 12 months",
+  "publisher": "Example Freelancer Survey", "source_type": "industry_report", "date": "2025-05", "sample_size": 1200,
+  "claim_key": "late_payment_share", "criteria": ["problem"]},
+ {"claim": "Competitor A price for automatic reminders", "value": 15, "unit": "EUR/month",
+  "url": "https://example.com/competitor-a/pricing", "quote": "Pro plan: 15 € per month, automatic payment reminders included",
+  "publisher": "Competitor A", "source_type": "company_page", "date": "2026-09", "criteria": ["willingness_to_pay", "competition"]},
+ {"claim": "A forum post complaining about chasing invoices", "url": "https://forum.example.net/t/chasing-invoices",
+  "quote": "I spend every Friday afternoon chasing clients who have not paid",
+  "publisher": "Example Forum", "source_type": "forum", "date": "2026-02", "criteria": ["problem"]}
+]

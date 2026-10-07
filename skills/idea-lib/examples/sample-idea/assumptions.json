@@ -1,0 +1,85 @@
+{
+ "currency": "EUR",
+ "model": "subscription",
+ "horizon_months": 36,
+ "inputs": {
+  "price": {
+   "low": 9,
+   "mode": 12,
+   "high": 15,
+   "source": "claim:C002",
+   "note": "competitor A charges 15 (F002)"
+  },
+  "payment_fee_pct": {
+   "low": 0.02,
+   "mode": 0.03,
+   "high": 0.04,
+   "source": "estimate"
+  },
+  "variable_cost_paying": {
+   "low": 0.5,
+   "mode": 1,
+   "high": 2,
+   "source": "estimate",
+   "note": "email sending and hosting"
+  },
+  "fixed_monthly": {
+   "low": 40,
+   "mode": 80,
+   "high": 150,
+   "source": "estimate"
+  },
+  "startup_cost": {
+   "low": 0,
+   "mode": 500,
+   "high": 1500,
+   "source": "estimate"
+  },
+  "visitors_month1": {
+   "low": 300,
+   "mode": 800,
+   "high": 2000,
+   "source": "estimate"
+  },
+  "visitor_growth_monthly": {
+   "low": 0.0,
+   "mode": 0.05,
+   "high": 0.1,
+   "source": "estimate"
+  },
+  "visitor_to_signup": {
+   "low": 0.02,
+   "mode": 0.1,
+   "high": 0.15,
+   "source": "estimate",
+   "prior": "landing_signup_saas"
+  },
+  "signup_to_paid": {
+   "low": 0.01,
+   "mode": 0.04,
+   "high": 0.06,
+   "source": "baserate:freemium_to_paid_selfserve",
+   "prior": "freemium_to_paid_selfserve"
+  },
+  "monthly_churn": {
+   "low": 0.03,
+   "mode": 0.065,
+   "high": 0.12,
+   "source": "baserate:saas_monthly_churn_early",
+   "prior": "saas_monthly_churn_early"
+  },
+  "free_user_monthly_churn": 0.3,
+  "paid_budget_monthly": {
+   "low": 0,
+   "mode": 100,
+   "high": 200,
+   "source": "estimate"
+  },
+  "cac_paid": {
+   "low": 40,
+   "mode": 80,
+   "high": 150,
+   "source": "estimate"
+  }
+ }
+}

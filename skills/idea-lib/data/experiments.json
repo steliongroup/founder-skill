@@ -1,0 +1,51 @@
+{
+ "about": "The cheapest real-world test for the weakest important criterion. Pass thresholds are fixed here, before the test runs. A passed test is entered as primary_data (grade A) evidence and the verdict is recomputed.",
+ "experiments": [
+  {
+   "id": "mom_test_interviews",
+   "criteria": ["problem", "distribution"],
+   "name_it": "10 interviste secondo il Mom Test",
+   "how_it": "Parla con 10 persone del segmento target. Chiedi solo di comportamenti passati: l'ultima volta che hanno avuto il problema, cosa hanno fatto, quanto hanno speso in tempo o denaro. Non presentare l'idea finché non hai finito le domande sul passato.",
+   "pass_it": "Almeno 4 persone su 10 descrivono un episodio recente del problema E una soluzione di ripiego su cui spendono tempo o denaro.",
+   "cost_it": "0 euro, 5-8 ore",
+   "threshold_basis": "convention (Fitzpatrick, The Mom Test); not a published base rate"
+  },
+  {
+   "id": "fake_door_price",
+   "criteria": ["willingness_to_pay", "demand"],
+   "name_it": "Landing page con prezzo (fake door)",
+   "how_it": "Una pagina con proposta, prezzo e pulsante 'Acquista' o 'Pre-ordina' che porta a una lista d'attesa. Porta almeno 300 visitatori dal segmento target (comunità, ricerca, piccola campagna).",
+   "pass_it": "Conversione visitatore -> clic sul pulsante con prezzo almeno pari al tasso base landing_signup_saas (3,8%) su almeno 300 visitatori.",
+   "cost_it": "0-100 euro, 1-2 settimane",
+   "baserate": "landing_signup_saas",
+   "threshold_basis": "Unbounce SaaS median landing-page conversion"
+  },
+  {
+   "id": "presale",
+   "criteria": ["willingness_to_pay", "unit_economics"],
+   "name_it": "Pre-vendita o pilota a pagamento",
+   "how_it": "Offri l'accesso anticipato a prezzo pieno (o un pilota pagato per il B2B) con rimborso garantito se non consegni.",
+   "pass_it": "Almeno 10 pagamenti reali (B2C) o 3 piloti pagati (B2B) entro 30 giorni.",
+   "cost_it": "0 euro, 2-4 settimane",
+   "threshold_basis": "convention; set before running and recorded in the verdict"
+  },
+  {
+   "id": "channel_probe",
+   "criteria": ["distribution", "market"],
+   "name_it": "Prova del canale",
+   "how_it": "Scegli il canale principale (community, ricerca, messaggi diretti B2B) e misura raggiungibilità e costo: 50 messaggi diretti, oppure 2 post in comunità pertinenti, oppure 50 euro di annunci.",
+   "pass_it": "Tasso di risposta o clic misurato e costo per contatto interessato compatibile con il CAC massimo calcolato dall'economia (LTV/3).",
+   "cost_it": "0-50 euro, 1 settimana",
+   "threshold_basis": "derived from the economics of this idea"
+  },
+  {
+   "id": "competitor_teardown",
+   "criteria": ["competition", "feasibility"],
+   "name_it": "Analisi diretta dei 3 concorrenti principali",
+   "how_it": "Prova i 3 concorrenti più vicini (versione gratuita o trial), leggi 30 recensioni negative ciascuno, annota cosa manca e quanto costa replicare il loro nucleo.",
+   "pass_it": "Almeno un bisogno ricorrente (presente in 5 o più recensioni) che nessuno dei 3 risolve e che l'offerta risolve.",
+   "cost_it": "0 euro, 1-2 giorni",
+   "threshold_basis": "convention"
+  }
+ ]
+}

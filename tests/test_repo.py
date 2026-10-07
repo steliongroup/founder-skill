@@ -7,6 +7,7 @@ from _load import ROOT, SKILLS_DIR
 
 SKILLS = ["founder-board", "founder-marketing", "founder-cfo", "founder-consumer", "founder-launch",
           "founder-pricing", "founder-offer", "founder-competitors", "founder-brand", "founder-ops", "founder-plan"]
+IDEA_SKILLS = ["idea-valuta", "idea-intake", "idea-evidence", "idea-economics", "idea-verdict"]
 ABOUT = ("Eleven free Claude skills that test a business before you launch it: a board trained on Hormozi, "
          "Thiel and Jobs, a marketing director, a CFO, and a consumer panel of 100 buyer agents. Free, MIT.")
 
@@ -32,7 +33,7 @@ def text_files():
 class Repo(unittest.TestCase):
     def test_eleven_skill_folders(self):
         found = sorted(d for d in os.listdir(SKILLS_DIR) if os.path.isfile(os.path.join(SKILLS_DIR, d, "SKILL.md")))
-        self.assertEqual(found, sorted(SKILLS))
+        self.assertEqual(found, sorted(SKILLS + IDEA_SKILLS))
 
     def test_frontmatter_name_and_description(self):
         for s in SKILLS:
@@ -42,8 +43,15 @@ class Repo(unittest.TestCase):
             self.assertGreater(len(fm), 300, "%s description is too thin" % s)
             self.assertGreater(len(text.splitlines()), 60, s)
 
+    def test_idea_skills_frontmatter_and_tool(self):
+        for s in IDEA_SKILLS:
+            fm, text = frontmatter(os.path.join(SKILLS_DIR, s, "SKILL.md"))
+            self.assertIn("name: %s\n" % s, fm + "\n", s)
+            self.assertGreater(len(fm), 300, "%s description is too thin" % s)
+            self.assertIn("${CLAUDE_SKILL_DIR}/../idea-lib/ik.py", text, s)
+
     def test_tools_named_in_skills_exist(self):
-        for s in SKILLS:
+        for s in SKILLS + IDEA_SKILLS:
             _, text = frontmatter(os.path.join(SKILLS_DIR, s, "SKILL.md"))
             for tool in re.findall(r"\$\{CLAUDE_SKILL_DIR\}/([\w.\-/]+\.(?:py|md))", text):
                 self.assertTrue(os.path.exists(os.path.normpath(os.path.join(SKILLS_DIR, s, tool))), "%s: %s" % (s, tool))
