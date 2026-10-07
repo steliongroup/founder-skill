@@ -100,15 +100,15 @@ verified, fetched_at}`.
 |---|---|---|---|---|
 | 0 | `/valuta` | Orchestratore: modo `quick` (scrematura) o `full`; riprende da dove si era fermato | stato della pipeline | Claude |
 | 1 | `intake` | Dall'idea, o dai documenti che hai già, ricava la **scheda cieca**: archetipo (B2B/B2C, piattaforma, paese), affermazioni del fondatore come ipotesi di grado D | classificazione, rimozione del tono | Claude |
-| 2 | `prereg` | Sceglie la rubrica per archetipo e la congela | hash, versione | — |
+| 2 | `prereg` | Sceglie la rubrica per archetipo e la congela | hash, versione | - |
 | 3 | `demand` | Domanda di ricerca: Google Trends (trendspy), autocompletamento di Google, YouTube e Bing, pageview di Wikipedia; Keyword Planner opzionale | script Python, cache | Claude sceglie le parole chiave |
 | 4 | `competitors` | Scoperta (HN Algolia, GitHub, iTunes, Google Play, Product Hunt, web) e trazione: recensioni, fascia di installazioni, rank Tranco/CrUX, età del dominio (RDAP), stack tecnologico (webappanalyzer); pagine prezzi con crawl4ai o Playwright | raccolta e normalizzazione | Claude mappa e classifica |
 | 5 | `voice` | Problemi dei clienti: recensioni da 1-3 stelle sugli store, HN, Stack Exchange, commenti YouTube, Reddit via ricerca web | verifica delle citazioni | Claude raggruppa i temi |
 | 6 | `market` | TAM/SAM/SOM dal basso con dati ufficiali (Eurostat SBS e ICT, US Census CBP, World Bank, ISTAT, OECD) | formula e Monte Carlo | Claude sceglie i codici NACE/NAICS |
 | 7 | `panel` | Panel simulato **economico e tarato** (vedi §5) | OpenRouter in parallelo, punteggio SSR, conteggi | modelli economici |
 | 8 | `pricing` | Distribuzione dei prezzi dei concorrenti, Van Westendorp dal panel (solo **relativo**), prezzo da testare | script | Claude |
-| 9 | `economics` | Unit economics per software: MRR, conversione free→paid, churn, LTV, CAC, payback, mesi alla sostenibilità, P10/P50/P90, partendo dai tassi base | script (sostituisce il modello da bar) | — |
-| 10 | `risks` | Premortem, red team, checklist normativa per paese (GDPR, AI Act, consumatori), dipendenza da piattaforme | — | agenti separati |
+| 9 | `economics` | Unit economics per software: MRR, conversione free→paid, churn, LTV, CAC, payback, mesi alla sostenibilità, P10/P50/P90, partendo dai tassi base | script (sostituisce il modello da bar) | - |
+| 10 | `risks` | Premortem, red team, checklist normativa per paese (GDPR, AI Act, consumatori), dipendenza da piattaforme | - | agenti separati |
 | 11 | `jury` | Giuria cieca di più modelli sulla rubrica ancorata | validatore delle citazioni, mediana, dispersione | 3-5 modelli via OpenRouter |
 | 12 | `verdict` | Punteggio, **confidenza** (copertura di prove A/B, dispersione della giuria), soglie di scarto scattate, rischi principali, "cosa cambierebbe il verdetto", **esperimento reale più economico** con soglia fissata prima | tutto in codice | Claude scrive solo il riassunto |
 
